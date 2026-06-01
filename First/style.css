@@ -1,0 +1,508 @@
+/*
+===========================================
+  style.css — Sepideh Homami · NVIDIA TPM
+  Built with: Pure CSS. No frameworks.
+  Font: Google Fonts (Syne + DM Sans)
+===========================================
+
+  HOW TO EXPLAIN THIS FILE:
+  "I wrote all the CSS by hand — no Bootstrap,
+   no Tailwind, no pre-built UI library.
+   I used CSS custom properties (variables)
+   for the color palette so I could change
+   the whole theme by editing just one place.
+   The animations are pure CSS keyframes."
+*/
+
+
+/* ── 1. CSS CUSTOM PROPERTIES (Variables) ───────────────
+   These are like constants in programming.
+   Define a color once, use it everywhere.
+   Change --purple here and it updates the whole site.
+*/
+:root {
+  --navy:   #080E1F;   /* dark background */
+  --blue:   #0090FF;   /* bright blue accent */
+  --green:  #76B900;   /* NVIDIA green */
+  --teal:   #00E5FF;   /* electric teal */
+  --amber:  #FFB800;   /* warm gold */
+  --purple: #A855F7;   /* main accent */
+  --pink:   #F72585;   /* hot pink highlight */
+  --white:  #FFFFFF;
+  --mid:    #CBD5E0;   /* medium text */
+  --light:  #8896B0;   /* muted text */
+}
+
+/* ── 2. RESET ────────────────────────────────────────────
+   Browsers add default margins and padding.
+   box-sizing: border-box means padding is
+   included inside the element width — prevents
+   layout surprises.
+*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── 3. SMOOTH SCROLL ───────────────────────────────────
+   When you click a nav link, the page scrolls
+   smoothly instead of jumping.
+*/
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* ── 4. CSS ANIMATIONS (Keyframes) ─────────────────────
+   @keyframes defines animation steps.
+   You name them and attach them to elements
+   with the `animation` property.
+*/
+
+/* Shimmer: text color slides across — used on nav brand */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* Float: gentle up-down bobbing — used on icons */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* FadeUp: elements appear by fading in and sliding up */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── 5. BODY ─────────────────────────────────────────────
+   radial-gradient creates the glowing colored blobs
+   in the background. Each one has:
+   - a shape (ellipse)
+   - a size (70% 50%)
+   - a position (at 10% 5%)
+   - a color that fades to transparent
+*/
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 70% 50% at 10%  5%, rgba(168,85,247,.15) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 15%, rgba(0,229,255,.10) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 80% 85%, rgba(0,144,255,.08) 0%, transparent 50%);
+}
+
+
+/* ── 6. NAVIGATION BAR ──────────────────────────────────
+   position: fixed keeps it at the top while you scroll.
+   backdrop-filter: blur creates the frosted glass effect.
+   z-index: 100 makes sure it sits above all other content.
+*/
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(8, 14, 31, 0.92); /* semi-transparent dark */
+  backdrop-filter: blur(16px);        /* frosted glass blur */
+  border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  box-shadow: 0 1px 30px rgba(168, 85, 247, 0.12);
+}
+
+/* Animated gradient text for the nav brand name.
+   background-clip: text clips the gradient to the text shape.
+   -webkit-text-fill-color: transparent makes the fill invisible
+   so the gradient shows through. */
+.nav-brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: .95rem;
+  background: linear-gradient(90deg, var(--purple), var(--teal), var(--green));
+  background-size: 200% auto;           /* wider than needed so shimmer has room */
+  animation: shimmer 4s linear infinite; /* slides the gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: .05em;
+}
+
+.nav-links { display: flex; gap: .25rem; }
+
+.nav-links a {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  font-size: .72rem;
+  font-weight: 500;
+  padding: .3rem .6rem;
+  border-radius: 4px;
+  transition: all 0.2s; /* smooth hover effect */
+}
+
+.nav-links a:hover {
+  background: rgba(168, 85, 247, 0.2);
+  color: var(--purple);
+}
+
+
+/* ── 7. HERO SECTION ────────────────────────────────────
+   CSS Grid with two equal columns.
+   min-height: 100vh = fills the full screen height.
+*/
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two equal columns */
+  gap: 4rem;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 2rem 60px;
+  animation: fadeUp 0.6s ease both; /* page load animation */
+}
+
+/* Gradient text on the name */
+.hero-left h1 .name {
+  background: linear-gradient(135deg, var(--white), rgba(255,255,255,.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Purple-pink-amber gradient on the role title */
+.hero-left h1 .role {
+  background: linear-gradient(135deg, var(--purple), var(--pink), var(--amber));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  font-size: clamp(1rem, 2vw, 1.4rem); /* responsive font size */
+  margin-top: .4rem;
+}
+
+.hero-tagline {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  max-width: 480px;
+}
+.hero-tagline strong { color: var(--teal); }
+
+/* Contact row — pill-shaped tags */
+.contact-row {
+  display: flex;
+  flex-wrap: wrap; /* wraps on small screens */
+  gap: .75rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: .35rem .8rem;
+  border-radius: 20px; /* pill shape */
+  font-size: .78rem;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.contact-pill a { color: var(--teal); text-decoration: none; }
+
+/* Medal/award badges */
+.medal-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+.medal-badge {
+  background: rgba(255, 184, 0, 0.12);
+  border: 1px solid rgba(255, 184, 0, 0.35);
+  color: #FFC94D;
+  font-size: .72rem;
+  font-weight: 600;
+  padding: .3rem .75rem;
+  border-radius: 20px;
+  letter-spacing: .03em;
+}
+
+
+/* ── 8. HERO CARD ───────────────────────────────────────
+   The purple-glowing card on the right side of the hero.
+*/
+.hero-card {
+  background: rgba(168, 85, 247, 0.07);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 0 60px rgba(168, 85, 247, 0.12); /* purple glow */
+}
+
+.hc-stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2x2 grid */
+  gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+.hc-stat {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: .75rem;
+  text-align: center;
+}
+
+.hc-stat .num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--purple);
+}
+
+.hc-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.hc-tag {
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: var(--teal);
+  font-size: .68rem;
+  font-weight: 600;
+  padding: .25rem .6rem;
+  border-radius: 12px;
+}
+
+
+/* ── 9. SECTION LAYOUT ──────────────────────────────────
+   max-width centers content.
+   margin: 0 auto centers the block horizontally.
+*/
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.sec-num {
+  font-family: 'Syne', sans-serif;
+  font-size: .68rem;
+  font-weight: 800;
+  color: #C084FC;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  background: rgba(168, 85, 247, 0.15);
+  padding: .3rem .7rem;
+  border-radius: 4px;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  white-space: nowrap;
+}
+
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem); /* min, preferred, max */
+  font-weight: 700;
+}
+
+/* Section separator line */
+.divider {
+  border: none;
+  border-top: 1px solid rgba(168, 85, 247, 0.12);
+}
+
+
+/* ── 10. UNDERSTANDING BOX ──────────────────────────────
+   The gradient border at top uses a pseudo-element
+   ::before with a linear-gradient background.
+   position: relative on parent + absolute on ::before
+   positions it precisely.
+*/
+.understanding-box {
+  background: linear-gradient(135deg, rgba(168,85,247,.1), rgba(0,144,255,.07));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden; /* clips the ::before to the box */
+}
+
+.understanding-box::before {
+  content: '';          /* required for pseudo-elements */
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;          /* thin rainbow line at top */
+  background: linear-gradient(90deg, var(--purple), var(--pink), var(--amber), var(--teal));
+}
+
+
+/* ── 11. VALUES GRID ────────────────────────────────────
+   auto-fill + minmax creates responsive columns
+   that automatically wrap when the screen is narrow.
+*/
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.value-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.25s; /* smooth hover transition */
+}
+
+.value-card:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.12);
+  transform: translateY(-2px); /* lifts the card on hover */
+}
+
+.value-icon {
+  font-size: 1.5rem;
+  margin-bottom: .6rem;
+  display: inline-block;
+  animation: float 3s ease infinite; /* gentle bobbing */
+}
+
+
+/* ── 12. EXPERIENCE TIMELINE ────────────────────────────
+   The vertical line is a ::before pseudo-element
+   on the container. Each dot is positioned absolutely
+   to sit on top of that line.
+*/
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--purple), var(--teal), var(--green));
+  border-radius: 2px;
+}
+
+.tl-item {
+  position: relative;
+  padding-bottom: 1.75rem;
+}
+
+.tl-dot {
+  position: absolute;
+  left: -2rem; top: 4px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--purple);
+  border: 3px solid var(--navy); /* gap between dot and line */
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.tl-dot.green { background: var(--green); box-shadow: 0 0 10px rgba(118,185,0,.5); }
+.tl-dot.teal  { background: var(--teal);  box-shadow: 0 0 10px rgba(0,229,255,.5); }
+
+
+/* ── 13. NPI BOX ────────────────────────────────────────
+   Simple list with a custom bullet (▸ instead of •).
+   position: absolute + relative lets us position
+   the arrow precisely before each list item.
+*/
+.npi-box {
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.npi-bullets { list-style: none; padding: 0; }
+
+.npi-bullets li {
+  padding: .3rem 0 .3rem 1.2rem;
+  position: relative;
+  font-size: .84rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.55;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.npi-bullets li::before {
+  content: '▸';           /* custom bullet character */
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+}
+
+
+/* ── 14. PRODUCTS GRID ──────────────────────────────────
+   Same responsive grid pattern as values.
+*/
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.prod-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1.1rem;
+  transition: all 0.25s;
+}
+
+.prod-card:hover {
+  border-color: rgba(0, 229, 255, 0.35);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.08);
+}
+
+/* Status badge colors */
+.prod-current { background: rgba(118,185,0,.2);  color: #9DCC3C; border: 1px solid rgba(118,185,0,.35); }
+.prod-next    { background: rgba(168,85,247,.2);  color: #C084FC; border: 1px solid rgba(168,85,247,.35); }
+.prod-prev    { background: rgba(255,255,255,.08); color: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.12); }
+
+.prod-status {
+  font-size: .7rem;
+  font-weight: 600;
+  padding: .2rem .5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+
+/* ── 15. TWO COLUMN LAYOUT ──────────────────────────────
+   Simple grid for side-by-side content blocks.
+*/
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+
+/* ── 16. RESPONSIVE — MOBILE ────────────────────────────
+   @media queries apply styles only at certain screen sizes.
+   max-width: 768px = tablets and phones.
+   On small screens: single column layout, hide nav links.
+*/
+@media (max-width: 768px) {
+  .hero         { grid-template-columns: 1fr; padding-top: 80px; }
+  .two-col      { grid-template-columns: 1fr; }
+  .values-grid  { grid-template-columns: 1fr 1fr; }
+  .nav-links    { display: none; }
+}
